@@ -17,33 +17,37 @@
         // Get user input
         $email = $_POST['email'];
         $password = $_POST['password'];
-        /***
+  
         // Execute the Python script and capture its output
-        $cmd = escapeshellcmd("/Users/mac/.local/share/virtualenvs/j-znrU1gIY/bin/python " . "/Applications/XAMPP/xamppfiles/htdocs/EtuServices/exec.py". escapeshellarg($email) . ' ' . escapeshellarg($password));
+        $cmd = 'python exec.py ' . escapeshellarg($email) . ' ' . escapeshellarg($password);
         $output = shell_exec($cmd);
-        // echo "<pre>$output</pre>";
-        // Check if the output is not empty
-        if (!empty($output)) {
-            // Check the output to determine the state
-            if (trim($output) == "blocked") {
-                // User is blocked
-                echo "Your account is blocked.";
-            } elseif (is_numeric(trim($output)) && intval($output) > 0) {
-                // User needs to wait for $output seconds before retrying
-                echo "Please wait " . intval($output) . " seconds before retrying.";
-            } elseif (trim($output) == "0") {
-                // Access granted
-                echo "Access granted.";
-            } else {
-                // Unexpected output
-                echo "Unexpected output from Python script: " . htmlspecialchars($output);
-            }
-        
+        var_dump($output); // Display the output for debugging
+
+        // Check if the script returned a valid result
+        if ($output === FALSE) {
+            echo "Error executing the Python script";
         } else {
-            // No output received from the Python script
-            echo "No output received from Python script.";
+            // Check the script result
+            if ($output == "blocked") {
+                // User is blocked, redirect with an error message
+                header("Location: login.php?error=Your account is blocked.");
+                exit();
+            } elseif (is_numeric($output) && $output > 0) {
+                // User needs to wait, show a waiting message
+                echo "Please wait $output seconds before retrying.";
+            } else {
+                // Validate user credentials
+                if (authenticate_user($email, $password)) {
+                    // Redirect to the services page upon successful authentication
+                    header("Location: services.php");
+                    exit();
+                } else {
+                    // Redirect back to the login page with an error message
+                    header("Location: login.php?error=Incorrect credentials.");
+                    exit();
+                }
+            }
         }
-        */
     }
     ?>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
