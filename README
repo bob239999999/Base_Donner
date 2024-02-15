@@ -1,0 +1,38 @@
+Access Control System using Redis and MySQL
+
+Project Overview:
+This project implements an access control system using Redis as the primary tool for managing access to a MySQL database. It provides functionality to restrict user access based on certain criteria and maintains security standards through various features.
+
+Technologies Used:
+Redis Server: Utilized for access control mechanisms and managing user access to the database.
+MySQL Database (XAMPP): Used for storing user information and managing access rights through PHPMyAdmin.
+XAMPP: Facilitated database management and administration, allowing for the creation of the 'Login' database and the 'user' table.
+Components:
+Redis Server Integration:
+Redis server is executed from the public_html directory using the redis-server command.
+Commands such as redis-cli are employed to monitor and manage access controls, ensuring adherence to security norms.
+Database Setup:
+XAMPP provides the environment to create a MySQL database named 'Login' and a corresponding 'user' table.
+Access to the database is configured with root privileges, ensuring comprehensive control over database conditions.
+PHP Scripts:
+accueil.php: Allows the addition of new users to the database.
+login.php: Controls access to the service.php page by validating user credentials against database records.
+Other PHP scripts manage access control using Redis, implementing features such as access count monitoring and temporary blocking for users who exceed predefined limits.
+Access Control Mechanisms:
+Authentication:
+User credentials provided during login are compared with database records for authentication.
+Access Counting and Blocking:
+Redis functionality is leveraged to monitor the number of accesses per user.
+Users exceeding access thresholds are temporarily blocked, with access restored after a specified time period (e.g., 10 minutes).
+Challenges Faced:
+Path Configuration:
+Difficulties were encountered in connecting the access control script that interacts with Redis to the losing.php script due to path configurations.
+Specifically, resolving the correct path to execute the Redis script from the losing.php file proved challenging.
+Usage:
+Ensure Redis server is running from the public_html directory using the redis-server command.
+Access the database via PHPMyAdmin in XAMPP to manage the 'Login' database and 'user' table.
+Utilize PHP scripts (accueil.php, login.php, etc.) for user interaction and access control functionalities.
+Conclusion:
+This project offers a robust access control system for managing user access to a MySQL database. By combining Redis for access control and MySQL for data storage, it provides an effective solution for ensuring database security and managing user access rights.
+
+Britel Mohammed Yassine IDU4
